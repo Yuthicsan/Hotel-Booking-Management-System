@@ -1,3 +1,21 @@
+/**
+ * Book My Stay App
+ *
+ * Use Case 3: Centralized Room Inventory Management
+ *
+ * Demonstrates how HashMap is used to centralize and manage
+ * room availability efficiently.
+ *
+ * @author YourName
+ * @version 3.1
+ */
+
+import java.util.HashMap;
+import java.util.Map;
+
+// -------------------- DOMAIN MODEL --------------------
+
+// Abstract Room class
 abstract class Room {
 
     private String roomType;
@@ -50,40 +68,81 @@ class SuiteRoom extends Room {
     }
 }
 
+// -------------------- INVENTORY MANAGEMENT --------------------
+
 /**
- * Main Application Class
+ * RoomInventory acts as the single source of truth
+ * for all room availability.
  */
+class RoomInventory {
+
+    private Map<String, Integer> inventory;
+
+    // Constructor initializes inventory
+    public RoomInventory() {
+        inventory = new HashMap<>();
+
+        // Initial availability setup
+        inventory.put("Single Room", 5);
+        inventory.put("Double Room", 3);
+        inventory.put("Suite Room", 2);
+    }
+
+    // Get availability
+    public int getAvailability(String roomType) {
+        return inventory.getOrDefault(roomType, 0);
+    }
+
+    // Update availability (controlled)
+    public void updateAvailability(String roomType, int count) {
+        if (inventory.containsKey(roomType)) {
+            inventory.put(roomType, count);
+        } else {
+            System.out.println("Room type not found: " + roomType);
+        }
+    }
+
+    // Display entire inventory
+    public void displayInventory() {
+        System.out.println("------ Current Room Inventory ------");
+        for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+        }
+    }
+}
+
+// -------------------- MAIN APPLICATION --------------------
+
 public class BookMyStayApp {
 
     public static void main(String[] args) {
 
-        // Create room objects (Polymorphism)
+        // Initialize rooms (Domain)
         Room singleRoom = new SingleRoom();
         Room doubleRoom = new DoubleRoom();
         Room suiteRoom = new SuiteRoom();
 
-        // Static availability (simple variables)
-        int singleAvailability = 5;
-        int doubleAvailability = 3;
-        int suiteAvailability = 2;
+        // Initialize inventory (Centralized state)
+        RoomInventory inventory = new RoomInventory();
 
         System.out.println("========== Book My Stay App ==========");
-        System.out.println("Version: 2.1\n");
+        System.out.println("Version: 3.1\n");
 
-        // Single Room
+        // Display Room Details + Availability
         System.out.println("--- Single Room ---");
         singleRoom.displayDetails();
-        System.out.println("Available: " + singleAvailability + "\n");
+        System.out.println("Available: " + inventory.getAvailability(singleRoom.getRoomType()) + "\n");
 
-        // Double Room
         System.out.println("--- Double Room ---");
         doubleRoom.displayDetails();
-        System.out.println("Available: " + doubleAvailability + "\n");
+        System.out.println("Available: " + inventory.getAvailability(doubleRoom.getRoomType()) + "\n");
 
-        // Suite Room
         System.out.println("--- Suite Room ---");
         suiteRoom.displayDetails();
-        System.out.println("Available: " + suiteAvailability + "\n");
+        System.out.println("Available: " + inventory.getAvailability(suiteRoom.getRoomType()) + "\n");
+
+        // Display full inventory
+        inventory.displayInventory();
 
         System.out.println("======================================");
     }
