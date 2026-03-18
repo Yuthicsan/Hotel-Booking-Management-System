@@ -1,21 +1,4 @@
-/**
- * Book My Stay App
- *
- * Use Case 5: Booking Request (First-Come-First-Served)
- *
- * Demonstrates how a Queue is used to handle booking requests
- * in a fair and ordered manner (FIFO).
- *
- * No inventory updates are performed at this stage.
- *
- * @author YourName
- * @version 5.1
- */
-
 import java.util.*;
-
-// -------------------- DOMAIN MODEL --------------------
-
 abstract class Room {
 
     private String roomType;
