@@ -1,19 +1,5 @@
-/**
- * Book My Stay App
- *
- * Use Case 4: Room Search & Availability Check
- *
- * Demonstrates read-only access to centralized inventory.
- * Only available rooms are displayed without modifying system state.
- *
- * @author YourName
- * @version 4.1
- */
-
 import java.util.*;
-
 // -------------------- DOMAIN MODEL --------------------
-
 abstract class Room {
 
     private String roomType;
@@ -21,7 +7,7 @@ abstract class Room {
     private double price;
 
     public Room(String roomType, int beds, double price) {
-        this.roomType = roomType;
+        this.roomType  = roomType;
         this.beds = beds;
         this.price = price;
     }
